@@ -15,6 +15,7 @@ namespace Core.Aspects.Autofact.Validation
         private Type _validatorType;
         public ValidationAspect(Type validatorType)
         {
+            //defensive coding
             if (!typeof(IValidator).IsAssignableFrom(validatorType))
             {
                 throw new System.Exception("Bu bir doğrulama sınıfı değil");
@@ -22,6 +23,7 @@ namespace Core.Aspects.Autofact.Validation
 
             _validatorType = validatorType;
         }
+        // Validation doğrulama olduğundan dolayı sadece onbefore metodunu eziyoruz
         protected override void OnBefore(IInvocation invocation)
         {
             var validator = (IValidator)Activator.CreateInstance(_validatorType);
